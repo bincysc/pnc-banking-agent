@@ -54,6 +54,28 @@ class Config(BaseSettings):
     bedrock_temperature: float = Field(default=0.0, ge=0.0, le=1.0)
     bedrock_max_tokens: int = Field(default=1024, gt=0, le=8192)
 
+    # Database connection strings
+    postgres_dsn: str = Field(
+        default="postgresql://agent:agent_dev_password@localhost:5432/banking",
+        description="PostgreSQL connection string in libpq URI format.",
+    )
+    mongodb_uri: str = Field(
+        default="mongodb://agent:agent_dev_password@localhost:27017/banking?authSource=admin",
+        description="MongoDB connection URI.",
+    )
+    redis_url: str = Field(
+        default="redis://:agent_dev_password@localhost:6379/0",
+        description="Redis connection URL.",
+    )
+
+    # Cache TTLs (seconds)
+    cache_ttl_account: int = Field(default=30, gt=0)
+    cache_ttl_customer: int = Field(default=300, gt=0)
+
+    # Connection pool sizing
+    postgres_pool_min: int = Field(default=2, ge=1)
+    postgres_pool_max: int = Field(default=10, ge=1)
+
     # Agent configuration
     agent_max_turns: int = Field(
         default=10,
