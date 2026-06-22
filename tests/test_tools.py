@@ -7,7 +7,6 @@ non-deterministic LLM and is best validated through integration tests rather
 than unit tests.
 """
 
-import pytest
 
 from banking_agent.tools import (
     dispatch_tool,
