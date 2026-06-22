@@ -133,7 +133,10 @@ TOOL_SCHEMAS: list[dict[str, Any]] = [
                         },
                         "limit": {
                             "type": "integer",
-                            "description": "Maximum number of transactions to return (default 10, max 50)",
+                            "description": (
+                                "Maximum number of transactions to return "
+                                "(default 10, max 50)"
+                            ),
                             "minimum": 1,
                             "maximum": 50,
                         },

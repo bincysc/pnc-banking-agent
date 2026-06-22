@@ -15,7 +15,6 @@ from dotenv import load_dotenv
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
 # Load .env file before any environment variable reads.
 # In production (Lambda, ECS), environment variables are injected by the runtime
 # and this is a no-op. In local development, this populates os.environ from .env.
@@ -47,7 +46,10 @@ class Config(BaseSettings):
     # Bedrock model configuration
     bedrock_model_id: str = Field(
         default="us.anthropic.claude-sonnet-4-5-20250929-v1:0",
-        description="Bedrock model identifier. Inference profile IDs are preferred over base model IDs."
+        description=(
+            "Bedrock model identifier. Inference profile IDs are preferred "
+            "over base model IDs."
+        ),
     )
     bedrock_temperature: float = Field(default=0.0, ge=0.0, le=1.0)
     bedrock_max_tokens: int = Field(default=1024, gt=0, le=8192)
@@ -57,7 +59,10 @@ class Config(BaseSettings):
         default=10,
         gt=0,
         le=50,
-        description="Hard limit on agent loop iterations. Prevents runaway costs from infinite tool calls."
+        description=(
+            "Hard limit on agent loop iterations. Prevents runaway costs "
+            "from infinite tool calls."
+        ),
     )
 
     # Logging

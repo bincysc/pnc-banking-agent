@@ -8,10 +8,11 @@ tool calls or the turn limit is hit.
 """
 
 import logging
+from operator import add
 from typing import Annotated, Any, TypedDict
 
 from langgraph.graph import END, START, StateGraph
-from operator import add
+
 from banking_agent.bedrock_client import BedrockClient
 from banking_agent.config import get_config
 from banking_agent.tools import TOOL_SCHEMAS, dispatch_tool

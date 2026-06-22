@@ -8,7 +8,6 @@ this mock to the real database on Day 10 is a one-place change.
 """
 
 from datetime import datetime, timedelta
-from decimal import Decimal
 
 # Mock customers — keyed by customer_id.
 # In production this is a SELECT from the customers table in PostgreSQL.
