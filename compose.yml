@@ -1,0 +1,71 @@
+# Docker Compose configuration for local development.
+#
+# Defines the three databases the banking agent depends on:
+#   - PostgreSQL: structured data (customers, accounts, transactions)
+#   - MongoDB:    document data   (conversation history)
+#   - Redis:      cache layer     (hot data)
+#
+# Usage:
+#   docker compose up -d      # Start all services in the background
+#   docker compose down       # Stop and remove containers (keeps data)
+#   docker compose down -v    # Stop, remove containers AND volumes (wipes data)
+#   docker compose logs -f    # Tail logs from all services
+#   docker compose ps         # Show status of running services
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: pnc-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: agent
+      POSTGRES_PASSWORD: agent_dev_password
+      POSTGRES_DB: banking
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infra/db/postgres-init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agent -d banking"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  mongodb:
+    image: mongo:8
+    container_name: pnc-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: agent
+      MONGO_INITDB_ROOT_PASSWORD: agent_dev_password
+      MONGO_INITDB_DATABASE: banking
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok", "-u", "agent", "-p", "agent_dev_password", "--authenticationDatabase", "admin"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:8-alpine
+    container_name: pnc-redis
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "agent_dev_password", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "agent_dev_password", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  postgres-data:
+  mongodb-data:
+  redis-data:
