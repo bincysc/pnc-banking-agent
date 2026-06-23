@@ -20,7 +20,6 @@ from faker import Faker
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from banking_agent.config import get_config
 
 # Deterministic faker seed — same data every run, useful for development.
 fake = Faker()

@@ -10,20 +10,19 @@ with concrete example.
 import logging
 import sys
 from pathlib import Path
+
 from banking_agent.data_pipeline.silence_shutdown import silence_spark_shutdown_on_exit
+
 silence_spark_shutdown_on_exit()
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from delta.tables import DeltaTable
-from pyspark.sql import functions as F
 from pyspark.sql.utils import AnalysisException
 
 from banking_agent.data_pipeline.spark_session import get_spark
 from banking_agent.data_pipeline.write_to_delta import (
     ACCOUNTS_PATH,
     CUSTOMERS_PATH,
-    TRANSACTIONS_PATH,
 )
 
 logging.basicConfig(
@@ -56,7 +55,7 @@ def demo_1_schema_enforcement() -> None:
         bad_data.write.format("delta").mode("append").save(CUSTOMERS_PATH)
         print("UNEXPECTED: write succeeded when it should have been rejected")
     except AnalysisException as e:
-        print(f"Write correctly rejected — schema mismatch detected at write time")
+        print("Write correctly rejected — schema mismatch detected at write time")
         print(f"Spark error: {str(e)[:200]}...")
 
 
@@ -121,14 +120,13 @@ def demo_3_acid_overwrite() -> None:
     new = spark.read.format("delta").load(CUSTOMERS_PATH)
     new_count = new.count()
     print(f"After overwrite:  {new_count} customers")
-    print(f"The transition was atomic — no reader ever saw an intermediate count.")
+    print("The transition was atomic — no reader ever saw an intermediate count.")
 
     # Now we can time-travel BACK to the full version
     print("\nTime-traveling to the version BEFORE the overwrite:")
     history = spark.sql(f"DESCRIBE HISTORY delta.`{CUSTOMERS_PATH}`")
     history.select("version", "operation").show(truncate=False)
 
-    previous_version = full_count > new_count  # we expect to find an earlier version
     # The previous version is the latest one before the most recent commit
     v_before = spark.read.format("delta").option("versionAsOf", 0).load(CUSTOMERS_PATH)
     print(f"Version 0 still has {v_before.count()} customers — the original data.")

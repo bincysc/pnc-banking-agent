@@ -51,7 +51,8 @@ def main() -> None:
 
     # An aggregation — also an action
     print("\n--- Transactions by category ---")
-    from pyspark.sql.functions import count, sum as spark_sum
+    from pyspark.sql.functions import count
+    from pyspark.sql.functions import sum as spark_sum
 
     by_category = (
         transactions

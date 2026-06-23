@@ -14,7 +14,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from banking_agent.agent import build_graph
-from banking_agent.bedrock_client import BedrockClient
 from banking_agent.config import get_config
 
 

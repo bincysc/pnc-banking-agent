@@ -17,7 +17,6 @@ from pyspark.sql import functions as F
 from banking_agent.data_pipeline.load_from_postgres import (
     load_accounts,
     load_customers,
-    load_transactions,
 )
 
 logger = logging.getLogger(__name__)
