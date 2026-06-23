@@ -8,7 +8,7 @@ contain SQL or MongoDB queries directly.
 
 import logging
 from typing import Any
-
+from banking_agent.rag.retrieval import hybrid_retrieve
 from pydantic import BaseModel, Field, ValidationError
 
 from banking_agent.repositories import (
@@ -44,6 +44,22 @@ def _transactions() -> TransactionRepository:
 class GetAccountBalanceInput(BaseModel):
     account_id: str = Field(..., min_length=1, description="The account identifier")
 
+class LookupPolicyInput(BaseModel):
+    """Input schema for the lookup_policy tool."""
+    query: str = Field(
+        ...,
+        min_length=3,
+        max_length=500,
+        description="Natural-language question about bank policies, fees, "
+                    "or procedures (e.g. 'wire transfer limits', 'how to "
+                    "report fraud').",
+    )
+    max_results: int = Field(
+        default=3,
+        ge=1,
+        le=5,
+        description="Maximum number of policy excerpts to return (1-5).",
+    )
 
 class SearchTransactionsInput(BaseModel):
     account_id: str = Field(..., min_length=1, description="The account identifier")
@@ -140,6 +156,45 @@ def search_transactions_by_category(arguments: dict[str, Any]) -> dict[str, Any]
         ],
     }
 
+def lookup_policy(arguments: dict[str, Any]) -> dict[str, Any]:
+    """
+    Retrieve bank policy excerpts relevant to a natural-language query.
+
+    Uses hybrid retrieval (vector + BM25 with RRF fusion) to surface the
+    most relevant policy chunks. Returns the chunks with explicit citation
+    metadata (document name, section title) so the LLM can ground its
+    answer with specific references rather than paraphrasing freely.
+    """
+    try:
+        args = LookupPolicyInput.model_validate(arguments)
+    except ValidationError as e:
+        return {"error": "invalid_arguments", "details": e.errors()}
+
+    try:
+        results = hybrid_retrieve(args.query, k=args.max_results)
+    except Exception as e:
+        logger.error("lookup_policy_failed query=%r error=%s", args.query, e)
+        return {"error": "retrieval_failed", "message": str(e)}
+
+    if not results:
+        return {
+            "query": args.query,
+            "results": [],
+            "message": "No relevant policy information found.",
+        }
+
+    return {
+        "query": args.query,
+        "results": [
+            {
+                "document": r.document_name,
+                "section": r.section_title,
+                "content": r.content,
+                "relevance_score": round(r.score, 4),
+            }
+            for r in results
+        ],
+    }
 
 # --- Converse-format tool schemas ---
 
@@ -165,6 +220,38 @@ TOOL_SCHEMAS: list[dict[str, Any]] = [
                 }
             },
         }
+    },
+    {
+        "toolSpec": {
+            "name": "lookup_policy",
+            "description": (
+                "Search the bank's policy knowledge base for information about "
+                "wire transfer limits, account types, fees, fraud reporting, "
+                "mobile deposit, and other policies. Use this when the customer "
+                "asks about policies, procedures, fees, limits, or eligibility "
+                "rules. Returns relevant policy excerpts with citations to the "
+                "source document and section."
+            ),
+            "inputSchema": {
+                "json": {
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "description": "Natural-language question about a policy.",
+                        },
+                        "max_results": {
+                            "type": "integer",
+                            "description": "Maximum number of excerpts (default 3, max 5).",
+                            "default": 3,
+                            "minimum": 1,
+                            "maximum": 5,
+                        },
+                    },
+                    "required": ["query"],
+                },
+            },
+        },
     },
     {
         "toolSpec": {
@@ -243,6 +330,7 @@ TOOL_HANDLERS = {
     "get_account_balance": get_account_balance,
     "search_transactions": search_transactions,
     "search_transactions_by_category": search_transactions_by_category,
+    "lookup_policy": lookup_policy,
 }
 
 
