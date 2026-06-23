@@ -10,11 +10,9 @@ PostgreSQL JDBC driver is downloaded automatically by Spark on first run.
 """
 
 import logging
-from pathlib import Path
 
 from pyspark.sql import DataFrame
 from pyspark.sql.types import (
-    IntegerType,
     LongType,
     StringType,
     StructField,
