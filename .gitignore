@@ -36,4 +36,4 @@ htmlcov/
 
 # AWS
 .aws-sam/
-cdk.out/
+cdk.out/data/ 
