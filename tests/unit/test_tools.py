@@ -5,9 +5,9 @@ These tests use mocked repositories — no database connection is required.
 Integration tests exercising the real database live in tests/integration/.
 """
 
-import pytest
-from types import SimpleNamespace
 from unittest.mock import MagicMock
+
+import pytest
 
 from banking_agent.tools import (
     dispatch_tool,
