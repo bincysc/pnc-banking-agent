@@ -1,0 +1,51 @@
+customer_id,first_name,last_name,email,enrollment_date,address_line,state_code,risk_rating
+CUST-1001,Danielle,Johnson,danielle.johnson1@example.com,2020-10-24,21819 Johnson Course,NY,LOW
+CUST-1002,Jeffery,Wagner,jeffery.wagner2@example.com,2018-09-13,863 Lawrence Valleys,PA,LOW
+CUST-1003,Misty,Blake,misty.blake3@example.com,2019-11-01,4235 Christopher Court Suite 594,TX,MEDIUM
+CUST-1004,Lindsay,Blair,lindsay.blair4@example.com,2023-01-14,1849 Ray Squares,NC,LOW
+CUST-1005,Chad,Stanley,chad.stanley5@example.com,2025-01-18,31647 Martin Knoll Apt. 419,OH,LOW
+CUST-1006,Cynthia,Ferguson,cynthia.ferguson6@example.com,2020-07-22,6483 Cameron Trail,NY,LOW
+CUST-1007,Brian,Underwood,brian.underwood7@example.com,2025-04-28,4139 Lewis Parks Suite 724,NC,MEDIUM
+CUST-1008,Donald,Mcgee,donald.mcgee8@example.com,2023-01-22,969 Cox Dam Suite 101,NC,LOW
+CUST-1009,Eric,Moore,eric.moore9@example.com,2024-04-06,166 Rice Plaza Apt. 184,NC,LOW
+CUST-1010,Kayla,Peterson,kayla.peterson10@example.com,2020-12-20,70482 Monica Hills Apt. 252,GA,LOW
+CUST-1011,Amber,Osborne,amber.osborne11@example.com,2022-12-26,570 Sarah Wells,CA,MEDIUM
+CUST-1012,Tricia,Roman,tricia.roman12@example.com,2020-07-05,91171 David Mountains,TX,MEDIUM
+CUST-1013,Stacey,Martin,stacey.martin13@example.com,2022-12-18,83465 Lam Mission Apt. 331,IL,LOW
+CUST-1014,Matthew,Chapman,matthew.chapman14@example.com,2020-06-06,10310 Jones Freeway,FL,HIGH
+CUST-1015,Joshua,Washington,joshua.washington15@example.com,2023-01-23,997 Kristen Valley,IL,LOW
+CUST-1016,Richard,Davis,richard.davis16@example.com,2024-01-30,6670 Bruce Stream Suite 133,OH,LOW
+CUST-1017,James,West,james.west17@example.com,2022-01-23,7317 Brent Plains,IL,MEDIUM
+CUST-1018,Mary,Novak,mary.novak18@example.com,2026-05-10,67736 Franklin Alley,CA,MEDIUM
+CUST-1019,Tricia,Baker,tricia.baker19@example.com,2025-02-22,6872 Kenneth Centers Apt. 500,NC,LOW
+CUST-1020,Breanna,Shaw,breanna.shaw20@example.com,2025-09-23,81219 Emma Freeway,OH,LOW
+CUST-1021,Richard,David,richard.david21@example.com,2023-04-27,909 Robert Prairie,PA,MEDIUM
+CUST-1022,Annette,Stewart,annette.stewart22@example.com,2020-09-10,534 Anderson Rue,MI,MEDIUM
+CUST-1023,Kevin,Stewart,kevin.stewart23@example.com,2024-11-13,79911 William Curve,IL,LOW
+CUST-1024,Sarah,Ibarra,sarah.ibarra24@example.com,2025-12-14,4278 Carr Valley,NY,LOW
+CUST-1025,Destiny,Smith,destiny.smith25@example.com,2025-06-04,124 Pamela Summit Apt. 449,FL,MEDIUM
+CUST-1026,Jason,Cooper,jason.cooper26@example.com,2024-04-27,740 Cynthia Village Suite 005,NY,MEDIUM
+CUST-1027,Kellie,Walsh,kellie.walsh27@example.com,2020-09-13,786 Daniel Spurs,NY,LOW
+CUST-1028,Rebecca,Gardner,rebecca.gardner28@example.com,2025-07-28,826 Bobby Lakes Apt. 533,GA,MEDIUM
+CUST-1029,Elizabeth,Gomez,elizabeth.gomez29@example.com,2023-03-28,232 Nicole Burg Apt. 563,IL,LOW
+CUST-1030,Joseph,Cobb,joseph.cobb30@example.com,2019-05-24,73375 Hoover Well Apt. 303,IL,LOW
+CUST-1031,Raymond,Ramirez,raymond.ramirez31@example.com,2019-01-24,8685 Darrell Green Apt. 940,PA,MEDIUM
+CUST-1032,Daniel,Hamilton,daniel.hamilton32@example.com,2024-09-02,9816 Jonathan Station Suite 088,NY,MEDIUM
+CUST-1033,Gloria,Bentley,gloria.bentley33@example.com,2024-09-28,6159 Alvarado Crossing,TX,LOW
+CUST-1034,Jennifer,Evans,jennifer.evans34@example.com,2021-02-07,6482 Robert Light Apt. 994,FL,LOW
+CUST-1035,Richard,Bass,richard.bass35@example.com,2021-01-22,69957 Ramos Forest Suite 214,OH,LOW
+CUST-1036,Zachary,Schultz,zachary.schultz36@example.com,2021-04-29,43320 John Mountains,NC,LOW
+CUST-1037,Cheryl,Mack,cheryl.mack37@example.com,2022-05-07,936 Ross Drive Apt. 163,IL,MEDIUM
+CUST-1038,Gregory,Rubio,gregory.rubio38@example.com,2022-11-18,83172 Contreras Points Suite 798,CA,LOW
+CUST-1039,Ronald,Meadows,ronald.meadows39@example.com,2022-04-08,774 Mary Harbor,CA,MEDIUM
+CUST-1040,Katie,Boyd,katie.boyd40@example.com,2023-10-22,7143 Rogers Plains,OH,LOW
+CUST-1041,Christopher,Hernandez,christopher.hernandez41@example.com,2021-09-25,316 Rivera Mountain,FL,HIGH
+CUST-1042,Robert,Clark,robert.clark42@example.com,2022-01-18,096 Smith Knoll Suite 668,MI,MEDIUM
+CUST-1043,Julie,Payne,julie.payne43@example.com,2023-08-10,3467 Paul Skyway,IL,LOW
+CUST-1044,Erin,Powell,erin.powell44@example.com,2019-11-17,98069 Christopher Meadow Apt. 720,GA,LOW
+CUST-1045,Jorge,Murphy,jorge.murphy45@example.com,2022-05-05,6464 Thomas Summit Apt. 531,GA,LOW
+CUST-1046,Kimberly,Pearson,kimberly.pearson46@example.com,2024-11-21,30923 Thomas Crescent,TX,LOW
+CUST-1047,Anne,Robinson,anne.robinson47@example.com,2024-06-04,2991 Tami Coves Apt. 496,NC,LOW
+CUST-1048,Randy,Espinoza,randy.espinoza48@example.com,2019-02-14,49190 Patel Shore,MI,LOW
+CUST-1049,Mitchell,Hunter,mitchell.hunter49@example.com,2021-05-18,7165 Zimmerman Mews,MI,LOW
+CUST-1050,Gregory,Boyd,gregory.boyd50@example.com,2024-01-03,877 Petersen Ramp Suite 531,FL,HIGH

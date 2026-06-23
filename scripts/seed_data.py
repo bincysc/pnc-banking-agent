@@ -29,7 +29,9 @@ random.seed(42)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
-
+US_STATES = ["CA", "NY", "TX", "FL", "PA", "IL", "OH", "GA", "NC", "MI"]
+RISK_RATINGS = ["LOW", "MEDIUM", "HIGH"]
+RISK_WEIGHTS = [0.6, 0.3, 0.1]  # most customers are LOW risk
 
 # --- Configuration -----------------------------------------------------------
 
@@ -76,6 +78,9 @@ def generate_customers(count: int) -> list[dict]:
             "last_name": last,
             "email": f"{first.lower()}.{last.lower()}{i}@example.com",
             "enrollment_date": fake.date_between(start_date="-8y", end_date="-30d"),
+            "address_line": fake.street_address(),
+            "state_code": random.choice(US_STATES),
+            "risk_rating": random.choices(RISK_RATINGS, weights=RISK_WEIGHTS)[0],
         })
     return customers
 
@@ -143,8 +148,12 @@ def insert_customers(conn: psycopg.Connection, customers: list[dict]) -> None:
     with conn.cursor() as cur:
         cur.executemany(
             """
-            INSERT INTO customers (customer_id, first_name, last_name, email, enrollment_date)
-            VALUES (%(customer_id)s, %(first_name)s, %(last_name)s, %(email)s, %(enrollment_date)s)
+            INSERT INTO customers
+                (customer_id, first_name, last_name, email, enrollment_date,
+                 address_line, state_code, risk_rating)
+            VALUES
+                (%(customer_id)s, %(first_name)s, %(last_name)s, %(email)s, %(enrollment_date)s,
+                 %(address_line)s, %(state_code)s, %(risk_rating)s)
             """,
             customers,
         )

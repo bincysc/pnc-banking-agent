@@ -130,16 +130,12 @@ def write_transactions_to_silver() -> None:
     with billions of rows over years of history, this is the difference
     between scanning the whole table and scanning a small slice.
     """
-    df = _clean_transactions(load_transactions())
-    (
-        df.write
-        .format("delta")
-        .mode("overwrite")
-        .option("overwriteSchema", "true")
-        .partitionBy("year", "month")
-        .save(TRANSACTIONS_PATH)
-    )
-    logger.info("wrote_transactions_silver count=%d path=%s", df.count(), TRANSACTIONS_PATH)
+    def _clean_customers(df: DataFrame) -> DataFrame:
+        return (
+            df
+            .withColumn("ingested_at", F.current_timestamp())
+            .withColumn("email", F.lower(F.col("email")))
+        )
 
 
 # --- Convenience runner --------------------------------------------------

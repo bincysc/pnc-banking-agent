@@ -16,6 +16,9 @@ CREATE TABLE customers (
     last_name       VARCHAR(100) NOT NULL,
     email           VARCHAR(255) NOT NULL UNIQUE,
     enrollment_date DATE NOT NULL,
+    address_line    VARCHAR(255),
+    state_code      CHAR(2),
+    risk_rating     VARCHAR(20),
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
